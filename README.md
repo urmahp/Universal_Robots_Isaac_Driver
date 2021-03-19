@@ -93,16 +93,16 @@ driver to work. See the following setup guide:
 $ mkdir isaac_driver && cd isaac_driver
 ```
 
-2. Clone the [Universal_Robot_Client_Library](https://github.com/UniversalRobots/Universal_Robots_Client_Library):
+2. Clone the [Universal_Robot_Client_Library](https://github.com/urmahp/Universal_Robots_Client_Library/tree/isaac_driver):
 
 ```bash
-$ git clone -b boost https://github.com/UniversalRobots/Universal_Robots_Client_Library.git
+$ git clone -b isaac_driver https://github.com/urmahp/Universal_Robots_Client_Library.git
 ```
 
 3. Clone this repository
 
 ```bash
-$ git clone https://github.com/UniversalRobots/Universal_Robots_Isaac_Driver
+$ git clone -b isaac_driver_release https://github.com/urmahp/Universal_Robots_Isaac_Driver.git
 ```
 
 4. In this repository create a symlink "ur_client_library" to the client library.
