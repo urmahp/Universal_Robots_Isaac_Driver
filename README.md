@@ -158,7 +158,7 @@ actual setup, and make sure the path between the waypoints are obstacle-free. Re
 to update the ip for the arm. To run the application:
 
 ```bash
-$ bazel run packages/universal_robots/apps:shuffle_box
+$ bazel run packages/universal_robots/apps:shuffle_box_hardware
 ```
 
 3. Both samples can be run on Jetson. Follow [instructions](https://docs.nvidia.com/isaac/isaac/doc/getting_started.html#deploying-and-running-on-jetson)
