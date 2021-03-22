@@ -223,7 +223,7 @@ void UniversalRobots::stop()
   ur_driver_->stopControl();
   rtde_thread_running_ = false;
   rtde_main_loop_trd_.join();
-  //ur_driver_.reset();
+  ur_driver_.reset();
 }
 
 bool UniversalRobots::validateKinematicTree(const kinematic_tree::KinematicTree& model)

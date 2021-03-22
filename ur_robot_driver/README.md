@@ -45,7 +45,7 @@ components. The subgraphs provides the following interface edges:
 
 - **io_command(input)**: "subgraph/interface/io_command"
 
-- **resend_control_script**: "subgraph/interface/resend_control_script"
+- **resend_control_script(input)**: "subgraph/interface/resend_control_script"
 
 - **dashboard_command(input)**: "subgraph/interface/dashboard_command"
 
@@ -76,6 +76,7 @@ kinematics calculation.
 ## Technical details
 
 The following image shows a very coarse overview of the drivers architecture:
+
 ![Architecture overview](doc/architecture_coarse.svg "Architecture overview")
 
 The calibration check is not implemented yet. So for now an error will be printed

@@ -76,6 +76,7 @@ is no `external_control` program node running on the robot controller.
 - The program interpreting motion commands could be paused.
 
 The following plot illustrates the problem:
+
 ![Trajectory execution with default multiJointController](doc/traj_without_speed_scaling.png
 "Trajectory execution with default multiJointController")
 
@@ -95,6 +96,7 @@ executions can be explicitly paused and continued.
 
 With the ScaledMultiJointController the example motion shown in the previous diagram
 becomes:
+
 ![Trajectory execution with scaled_joint_trajectory_controller](doc/traj_with_speed_scaling.png
 "Trajectory execution with scaled_joint_trajectory_controller")
 
