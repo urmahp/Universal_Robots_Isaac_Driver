@@ -15,14 +15,14 @@ def wait_for_dc_mode(app, mode, state, timeout=10, node="ur.subgraph", component
 
 	assert wait_time < timeout, "failed to reach target mode, expected mode: {} current mode: {}".format(mode, response.anwser)
 
-def do_dashboard_command(app, command, arguments="", node="ur.subgraph", component="interface"):
+def do_dashboard_command(app, command, arguments="", node="ur.subgraph", component="interface", timeout=5):
 	"""Execute a dashboard command and waits for the result. Raises exception if no result could be received."""
 	msg = create_ur_msg("DashboardCommandProto")
 	msg.proto.dashboardRequest = command
 	msg.proto.argument = arguments
 	app.publish(node, component, "dashboard_command", msg)
 
-	recv_msg = wait_for_new_message(app, node, component, "dashboard_anwser", timeout=5)
+	recv_msg = wait_for_new_message(app, node, component, "dashboard_anwser", timeout=timeout)
 	if recv_msg is None:
 		raise Exception("Failed to receive anwser from dashboard server")
 	dc_response = get_ur_msg(recv_msg)

@@ -135,6 +135,9 @@ void UniversalRobots::start()
 
   rtde_main_loop_trd_ = std::thread(&UniversalRobots::RTDEMainLoop, this);
 
+  // Set number of allowed timeout reads on the robot.
+  ur_driver_->setKeepaliveCount(3);
+
   // Setup tick
   tickPeriodically();
 }
@@ -627,9 +630,6 @@ void UniversalRobots::publishJointTrajectory(RobotState robotStateSnapshot)
                                    proto_builder, tx_trajectory().buffers());
   tx_trajectory().publish();
   trajectory_reset_necessary_ = false;
-
-  // Set number of allowed timeout reads on the robot.
-  ur_driver_->setKeepaliveCount(3);
 }
 
 void UniversalRobots::publishProgramState()
@@ -647,7 +647,7 @@ void UniversalRobots::stopControl()
   {
     if (robot_program_running_)
     {
-      //ur_driver->stopControl();
+      ur_driver_->stopControl();
       robot_program_running_ = false;
       LOG_INFO("Stopped control of robot through Isaac");
     }

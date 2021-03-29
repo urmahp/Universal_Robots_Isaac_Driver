@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
 import time
+import argparse
 from utils.ur_msg import create_ur_msg
 from utils.test_utils import do_dashboard_command, wait_for_new_message, wait_for_dc_mode
 
@@ -9,15 +10,23 @@ from packages.pyalice import Application, Message, Composite
 class ToolIoTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        ip = args.robotip
+        robot = args.robot
+
         cls.app = Application(name="tool_io_test")
-        cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
+        if robot == "e-series":
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
+        elif robot == "cb3":
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_cb3_robot.subgraph.json", prefix="ur")
+        else: # default to eseries
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
 
         ur_driver = cls.app.nodes["ur.universal_robots"]["UniversalRobots"]
-        ur_driver.config.robot_ip = "127.0.0.1"
+        ur_driver.config.robot_ip = ip
         ur_driver.config.headless_mode = True
 
         ur_dc = cls.app.nodes["ur.dashboard_client_isaac"]["DashboardClientIsaac"]
-        ur_dc.config.robot_ip = "127.0.0.1"
+        ur_dc.config.robot_ip = ip
 
         cls.app.start()
 
@@ -70,6 +79,10 @@ class ToolIoTest(unittest.TestCase):
         self.assertEqual(io_state[0], io_values[0])
         self.assertEqual(io_state[1], io_values[1])
 
-
 if __name__ == "__main__":
-    unittest.main()
+    # parse the arguments with --test_arg=--robot="cb3" --test_arg=robotip="127.0.0.1"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--robot", help="robot generation to test against", default="e-series")
+    parser.add_argument("--robotip", help="ip address of the robot", default="127.0.0.1")
+    args = parser.parse_args()
+    unittest.main(argv=["--robot, --robotip"])

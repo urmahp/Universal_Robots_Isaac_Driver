@@ -1,3 +1,35 @@
+___
+
+# New release
+
+Welcome! This is a new release of the Universal Robots Isaac Driver with sveral [new
+features](#Features). This release is a step towards having a more stable and sustainable
+interface between UR robots and Nvidia Isaac-SDK. To evaluate the new release and
+develop the driver further, we hope you will take a little time to test it and
+provide some feedback.
+
+If you would like to help **[fill in the Survey](https://share.hsforms.com/19qJ5MI2WQYeDgfi07VAOUQ1kep1)** -
+any feedback, suggestion or contribution - is highly appreciated!
+
+The new release is built on top of a [client library](https://github.com/UniversalRobots/Universal_Robots_Client_Library)
+which abstracts the robots interfaces. To quickly get the driver up and running
+follow the [build instructions](#Setup). The driver also comes with [sample applications](#Sample-application),
+which can be used to quickly test the new release.
+
+Please report bugs and incomplete functionality as issues in the respective GitHub
+repository.
+
+- [Issues concerning the driver](https://github.com/UniversalRobots/Universal_Robots_Isaac_Driver/issues)
+
+- [Issues concerning the client library](https://github.com/UniversalRobots/Universal_Robots_Client_Library/issues)
+
+Please give us feedback through the **[survey](https://share.hsforms.com/19qJ5MI2WQYeDgfi07VAOUQ1kep1)**
+or [ROS@universal-robots.com](mailto:ROS@universal-robots.com) on what you have
+tested and how it worked out.
+
+Happy testing!
+___
+
 # Universal_Robots_Isaac_Driver
 
 Universal Robots have become a dominant supplier of lightweight, robotic manipulators
@@ -134,7 +166,7 @@ For installing the necessary URCap and creating a program, please see the indivi
 tutorials on how to [setup a CB3 robot](ur_robot_driver/doc/install_urcap_cb3.md)
 or how to [setup an e-Series robot](ur_robot_driver/doc/install_urcap_e_series.md).
 
-### Start application
+### Sample application
 
 To start any applications, you have to stand in the Isaac SDK folder, see [Nvidias
 documentation](https://docs.nvidia.com/isaac/isaac/doc/getting_started.html). This

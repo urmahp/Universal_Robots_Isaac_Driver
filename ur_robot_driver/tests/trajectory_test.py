@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
 import time
+import argparse
 from utils.ur_msg import create_ur_msg
 from utils.test_utils import do_dashboard_command, wait_for_new_message, wait_for_dc_mode
 
@@ -9,19 +10,27 @@ from packages.pyalice import Application, Message, Composite
 class TrajectoryTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        ip = args.robotip
+        robot = args.robot
+
         cls.app = Application(name="trajectory_test")
-        cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
+        if robot == "e-series":
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
+        elif robot == "cb3":
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_cb3_robot.subgraph.json", prefix="ur")
+        else: # default to eseries
+            cls.app.load("packages/universal_robots/ur_robot_driver/apps/ur_eseries_robot.subgraph.json", prefix="ur")
 
         cls.ur_controller = cls.app.nodes["ur.controller"]["ScaledMultiJointController"]
         cls.ur_controller.config.control_mode = "joint position"
 
         cls.ur_driver = cls.app.nodes["ur.universal_robots"]["UniversalRobots"]
         cls.ur_driver.config.control_mode = "joint position"
-        cls.ur_driver.config.robot_ip = "127.0.0.1"
+        cls.ur_driver.config.robot_ip = ip
         cls.ur_driver.config.headless_mode = True
 
         ur_dc = cls.app.nodes["ur.dashboard_client_isaac"]["DashboardClientIsaac"]
-        ur_dc.config.robot_ip = "127.0.0.1"
+        ur_dc.config.robot_ip = ip
 
         planner = cls.app.nodes["ur.local_plan"]["MultiJointLqrPlanner"]
         planner.config.speed_max = [2, 2, 2, 2, 2, 2]
@@ -142,4 +151,9 @@ class TrajectoryTest(unittest.TestCase):
                                     "failed to stay in target position. cur_pos: {}, target pos: {}".format(cur_pos, target_pos))
 
 if __name__ == "__main__":
-    unittest.main()
+    # parse the arguments with --test_arg=--robot="cb3" --test_arg=robotip="127.0.0.1"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--robot", help="robot generation to test against", default="e-series")
+    parser.add_argument("--robotip", help="ip address of the robot", default="127.0.0.1")
+    args = parser.parse_args()
+    unittest.main(argv=["--robot, --robotip"])
