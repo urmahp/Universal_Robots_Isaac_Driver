@@ -2,7 +2,6 @@ import time
 import re
 from .ur_msg import create_ur_msg, get_ur_msg
 
-
 def wait_for_dc_mode(app, mode, state, timeout=10, node="ur.subgraph", component="interface"):
     """Waits for a specific dashboard mode, could e.g. be used to wait for robot mode is running."""
     wait_time = 0.0
@@ -13,9 +12,9 @@ def wait_for_dc_mode(app, mode, state, timeout=10, node="ur.subgraph", component
         time.sleep(0.25)
         wait_time += 0.25
 
-    assert wait_time < timeout, "failed to reach target mode, expected mode: {} current mode: {}".format(mode, response.anwser)
+    assert wait_time < timeout, "failed to reach target mode, expected mode: {} current mode: {}".format(state, response.anwser)
 
-def do_dashboard_command(app, command, arguments="", node="ur.subgraph", component="interface", timeout=5):
+def do_dashboard_command(app, command, arguments="", node="ur.subgraph", component="interface", timeout=60):
     """Execute a dashboard command and waits for the result. Raises exception if no result could be received."""
     dashboard_msg = create_ur_msg("DashboardCommandProto")
     dashboard_msg.proto.dashboardRequest = command

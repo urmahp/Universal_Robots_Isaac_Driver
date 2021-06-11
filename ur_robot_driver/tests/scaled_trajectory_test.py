@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 import time
 import argparse
-from utils.ur_msg import create_ur_msg, get_ur_msg
+from utils.ur_msg import create_ur_msg
 from utils.test_utils import do_dashboard_command, wait_for_new_message, wait_for_dc_mode
 
 from packages.pyalice import Application, Message, Composite
@@ -59,16 +59,17 @@ class ScaledTrajectoryTest(unittest.TestCase):
         self.wait_for_driver(self)
 
         # Make sure ursim is brake released and powered on
-        time.sleep(2) # DashboardClient needs to be up and running
+        time.sleep(2) # TODO properly wait until DashboardClient is up and running
         do_dashboard_command(self.app, "brakeRelease")
         wait_for_dc_mode(self.app, "robotmode", "RUNNING")
+
         do_dashboard_command(self.app, "stop")
-        time.sleep(1)
+        wait_for_dc_mode(self.app, "programState", "STOPPED")
 
         resend_control_script = Message.create_message_builder("BooleanProto")
         resend_control_script.proto.flag = True
         self.app.publish("ur.subgraph", "interface", "resend_control_script", resend_control_script)
-        time.sleep(5)
+        time.sleep(2) # TODO properly wait until script is running
 
     def wait_for_driver(self, timeout=30):
         """Make sure the driver is started and publishing robot states."""

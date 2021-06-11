@@ -47,15 +47,13 @@ class ExternalControlTest(unittest.TestCase):
         """Make sure the robot is booted and ready to receive commands."""
         self.wait_for_driver(self)
 
-        # Make sure ursim is brake released and powered on
-        time.sleep(2) # DashboardClient needs to be up and running
+        time.sleep(2) # TODO properly wait until DashboardClient is up and running
         do_dashboard_command(self.app, "stop")
-        do_dashboard_command(self.app, "load", arguments="external_control.urp", timeout=15)
+        wait_for_dc_mode(self.app, "programState", "STOPPED")
+        do_dashboard_command(self.app, "load", arguments="external_control.urp")
         do_dashboard_command(self.app, "brakeRelease")
 
         wait_for_dc_mode(self.app, "robotmode", "RUNNING")
-
-        time.sleep(5)
 
     def wait_for_driver(self, timeout=30):
         """Make sure the driver is started and publishing robot states."""

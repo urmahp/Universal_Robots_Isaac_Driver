@@ -2,10 +2,9 @@ import unittest
 import numpy as np
 import time
 import argparse
-from utils.ur_msg import create_ur_msg
-from utils.test_utils import do_dashboard_command, wait_for_new_message, wait_for_dc_mode
+from utils.test_utils import wait_for_new_message
 
-from packages.pyalice import Application, Message, Composite
+from packages.pyalice import Application, Composite
 
 class ToolIoTest(unittest.TestCase):
     @classmethod
