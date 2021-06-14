@@ -73,7 +73,6 @@ void DashboardClientIsaac::tick()
 
 void DashboardClientIsaac::stop()
 {
-  dc_client_->disconnect();
   dc_client_.reset();
 }
 
@@ -257,8 +256,10 @@ DashboardClientIsaac::Response DashboardClientIsaac::executeCommand(const std::s
   Response resp;
   if (dc_client_->getState() == urcl::comm::SocketState::Connected)
   {
+    LOG_INFO("sending command %s", command.c_str());
     resp.anwser = dc_client_->sendAndReceive(command);
     resp.success = std::regex_match(resp.anwser, std::regex(expected));
+    LOG_INFO("received answer %s", resp.anwser.c_str());
   }
   else
   {
