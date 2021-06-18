@@ -50,7 +50,6 @@ class ExternalControlTest(unittest.TestCase):
         time.sleep(2) # TODO properly wait until DashboardClient is up and running
         do_dashboard_command(self.app, "stop")
         wait_for_dc_mode(self.app, "programState", "STOPPED")
-        do_dashboard_command(self.app, "load", arguments="external_control.urp")
         do_dashboard_command(self.app, "brakeRelease")
 
         wait_for_dc_mode(self.app, "robotmode", "RUNNING")
